@@ -1,51 +1,41 @@
-// routes/inventoryRoutes.js
 const express = require('express');
 const router = express.Router();
 const Inventory = require('../models/Inventory');
 
-// Add Inventory Entry
-router.post('/add', async (req, res) => {
+// Add to inventory
+router.post('/', async (req, res) => {
   try {
-    const inventory = new Inventory(req.body);
+    const { product, stockQuantity, lowStockThreshold } = req.body;
+    const inventory = new Inventory({ product, stockQuantity, lowStockThreshold });
     await inventory.save();
     res.status(201).json(inventory);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// Get All Inventory
+// Get all inventory
 router.get('/', async (req, res) => {
   try {
-    const inventory = await Inventory.find().populate('ProductID');
-    res.status(200).json(inventory);
+    const items = await Inventory.find().populate('product');
+    res.json(items);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Get Low Stock Items
-router.get('/low-stock', async (req, res) => {
-  try {
-    const lowStockItems = await Inventory.find({ StockQuantity: { $lt: 10 } });
-    res.status(200).json(lowStockItems);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Update Inventory
+// Update stock quantity
 router.put('/:id', async (req, res) => {
   try {
-    const updatedInventory = await Inventory.findByIdAndUpdate(
-      req.params.id, 
-      req.body, 
+    const { stockQuantity } = req.body;
+    const item = await Inventory.findByIdAndUpdate(
+      req.params.id,
+      { stockQuantity },
       { new: true }
     );
-    if (!updatedInventory) return res.status(404).json({ error: 'Inventory not found' });
-    res.status(200).json(updatedInventory);
+    res.json(item);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 

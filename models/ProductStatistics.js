@@ -1,13 +1,11 @@
-// models/ProductStatistics.js
 const mongoose = require('mongoose');
 
-const ProductStatisticsSchema = new mongoose.Schema({
-  ProductID:          { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-  TotalSales:         { type: Number, default: 0 },
-  TotalRevenue:       { type: Number, default: 0 },
-  AveragePrice:       { type: Number, default: 0 },
-  StockTurnoverRate:  { type: Number, default: 0 },
-  LastUpdated:        { type: Date, default: Date.now }
-});
+const productStatisticsSchema = new mongoose.Schema({
+  product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+  totalSales: { type: Number, default: 0 },
+  totalRevenue: { type: Number, default: 0 },
+  lastSoldDate: { type: Date },
+  views: { type: Number, default: 0 }, // If tracking engagement
+}, { timestamps: true });
 
-module.exports = mongoose.model('ProductStatistics', ProductStatisticsSchema);
+module.exports = mongoose.model('ProductStatistics', productStatisticsSchema);

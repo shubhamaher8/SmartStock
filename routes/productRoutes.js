@@ -2,60 +2,60 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
-const auth = require('../middleware/auth'); // Optional if you want to protect routes
+// const auth = require('../middleware/auth'); // Uncomment once auth middleware is ready
 
-// Add Product (Protected)
-router.post('/add', auth, async (req, res) => {
+// Create product
+router.post('/', async (req, res) => {
   try {
-    const product = new Product(req.body);
+    const { name, sku, price, quantityInStock, description } = req.body;
+    const product = new Product({ name, sku, price, quantityInStock, description });
     await product.save();
-    res.status(201).json(product);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Get All Products
-router.get('/', async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.status(200).json(products);
+    res.status(201).json({ message: 'Product added', product });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Get Product by ID
+// Get all products
+router.get('/', async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get single product by ID
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ error: 'Product not found' });
-    res.status(200).json(product);
+    res.json(product);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Update Product (Protected)
-router.put('/:id', auth, async (req, res) => {
+// Update product
+router.put('/:id', async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id, 
-      req.body, 
+      req.params.id,
+      { $set: req.body },
       { new: true }
     );
-    if (!updatedProduct) return res.status(404).json({ error: 'Product not found' });
-    res.status(200).json(updatedProduct);
+    res.json(updatedProduct);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// Delete Product (Protected)
-router.delete('/:id', auth, async (req, res) => {
+// Delete product
+router.delete('/:id', async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: 'Product deleted' });
+    res.json({ message: 'Product deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

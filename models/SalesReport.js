@@ -1,12 +1,10 @@
-// models/SalesReport.js
 const mongoose = require('mongoose');
 
-const SalesReportSchema = new mongoose.Schema({
-  ReportDate:         { type: Date, default: Date.now },
-  TotalSales:         { type: Number, required: true },
-  TotalRevenue:       { type: Number, required: true },
-  BestSellingProduct: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-  LeastSellingProduct:{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }
-});
+const salesReportSchema = new mongoose.Schema({
+  reportPeriod: { type: String, required: true }, // e.g., "March 2025"
+  totalRevenue: { type: Number, required: true },
+  totalSales: { type: Number, required: true },
+  bestSellingProduct: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+}, { timestamps: true });
 
-module.exports = mongoose.model('SalesReport', SalesReportSchema);
+module.exports = mongoose.model('SalesReport', salesReportSchema);

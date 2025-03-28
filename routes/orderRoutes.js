@@ -1,49 +1,39 @@
-// routes/orderRoutes.js
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 
-// Create Order
-router.post('/add', async (req, res) => {
+// Create order
+router.post('/', async (req, res) => {
   try {
-    const order = new Order(req.body);
+    const { user, products, totalAmount } = req.body;
+    const order = new Order({ user, products, totalAmount });
     await order.save();
     res.status(201).json(order);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Get All Orders
-router.get('/', async (req, res) => {
-  try {
-    const orders = await Order.find().populate('ProductID');
-    res.status(200).json(orders);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Update Order Status
-router.put('/:id', async (req, res) => {
+// Get all orders
+router.get('/', async (req, res) => {
   try {
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id, 
-      req.body, 
-      { new: true }
-    );
-    if (!updatedOrder) return res.status(404).json({ error: 'Order not found' });
-    res.status(200).json(updatedOrder);
+    const orders = await Order.find()
+      .populate('user', 'username email')
+      .populate('products.product');
+    res.json(orders);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// Delete Order
-router.delete('/:id', async (req, res) => {
+// Get single order
+router.get('/:id', async (req, res) => {
   try {
-    await Order.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: 'Order deleted' });
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'username email')
+      .populate('products.product');
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    res.json(order);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

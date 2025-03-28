@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const InventoryForecastSchema = new mongoose.Schema({
-    ProductID: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-    PredictedSales: { type: Number, required: true },
-    ReorderRecommendation: { type: String, required: true }
-});
+const inventoryForecastSchema = new mongoose.Schema({
+  product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+  forecastDate: { type: Date, required: true },
+  expectedDemand: { type: Number, required: true },
+  notes: { type: String },
+}, { timestamps: true });
 
-module.exports = mongoose.model('InventoryForecast', InventoryForecastSchema);
+module.exports = mongoose.model('InventoryForecast', inventoryForecastSchema);
