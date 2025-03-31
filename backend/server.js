@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 });
 
 // Routes
-app.use('/users', require('./routes/userRoutes'));
 app.use('/products', require('./routes/productRoutes'));
 app.use('/inventory', require('./routes/inventoryRoutes'));
 app.use('/orders', require('./routes/orderRoutes'));
@@ -30,7 +29,6 @@ app.use('/sales', require('./routes/saleRoutes'));
 app.use('/sales-report', require('./routes/salesReportRoutes'));
 app.use('/suppliers', require('./routes/supplierRoutes'));
 app.use('/statistics', require('./routes/statisticsRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/inventory', require('./routes/inventoryRoutes'));
 

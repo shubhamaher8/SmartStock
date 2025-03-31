@@ -2,7 +2,6 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
-// const auth = require('../middleware/auth'); // Uncomment once auth middleware is ready
 
 // Create product
 router.post('/', async (req, res) => {

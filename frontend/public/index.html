@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>SmartStock - Inventory Management</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/main.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>SmartStock</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="products">Products</a></li>
+                    <li><a href="#" class="nav-link" data-page="inventory">Inventory</a></li>
+                    <li><a href="#" class="nav-link" data-page="orders">Orders</a></li>
+                    <li><a href="#" class="nav-link" data-page="suppliers">Suppliers</a></li>
+                    <li><a href="#" class="nav-link" data-page="sales">Sales</a></li>
+                    <li><a href="#" class="nav-link" data-page="reports">Reports</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="content">
+            <div id="dashboard-page" class="page active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Total Products</h3>
+                        <p class="counter" id="total-products">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Low Stock Items</h3>
+                        <p class="counter" id="low-stock">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Recent Orders</h3>
+                        <p class="counter" id="recent-orders">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Today's Sales</h3>
+                        <p class="counter" id="today-sales">$0</p>
+                    </div>
+                </div>
+                <div class="dashboard-charts">
+                    <div class="chart-container">
+                        <h3>Sales Overview</h3>
+                        <div class="chart-placeholder">Sales chart will be displayed here</div>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Popular Products</h3>
+                        <div class="chart-placeholder">Popular products chart will be displayed here</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="products-page" class="page">
+                <h2>Products</h2>
+                <div class="action-bar">
+                    <button id="add-product-btn" class="btn">Add New Product</button>
+                    <div class="search-container">
+                        <input type="text" id="product-search" placeholder="Search products...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>SKU</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-list">
+                            <!-- Products will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="product-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2 id="modal-title">Add New Product</h2>
+                        <form id="product-form">
+                            <div class="form-group">
+                                <label for="product-name">Name</label>
+                                <input type="text" id="product-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-sku">SKU</label>
+                                <input type="text" id="product-sku" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Price</label>
+                                <input type="number" id="product-price" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-quantity">Quantity</label>
+                                <input type="number" id="product-quantity" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-description">Description</label>
+                                <textarea id="product-description"></textarea>
+                            </div>
+                            <button type="submit" class="btn">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="inventory-page" class="page">
+                <h2>Inventory Management</h2>
+                <div class="table-container">
+                    <table id="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Current Stock</th>
+                                <th>Reorder Level</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-list">
+                            <!-- Inventory will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="orders-page" class="page">
+                <h2>Orders</h2>
+                <div class="action-bar">
+                    <button id="add-order-btn" class="btn">New Order</button>
+                </div>
+                <div class="table-container">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-list">
+                            <!-- Orders will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="suppliers-page" class="page">
+                <h2>Suppliers</h2>
+                <div class="action-bar">
+                    <button id="add-supplier-btn" class="btn">Add Supplier</button>
+                </div>
+                <div class="table-container">
+                    <table id="suppliers-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="suppliers-list">
+                            <!-- Suppliers will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sales-page" class="page">
+                <h2>Sales</h2>
+                <div class="table-container">
+                    <table id="sales-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Products</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-list">
+                            <!-- Sales will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="reports-page" class="page">
+                <h2>Reports</h2>
+                <div class="reports-container">
+                    <div class="report-card">
+                        <h3>Sales Reports</h3>
+                        <p>View detailed sales reports by date range</p>
+                        <button class="btn report-btn" data-report="sales">Generate</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Inventory Reports</h3>
+                        <p>View current inventory status and valuation</p>
+                        <button class="btn report-btn" data-report="inventory">Generate</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Product Performance</h3>
+                        <p>Analyze product sales and performance</p>
+                        <button class="btn report-btn" data-report="products">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2023 SmartStock Inventory Management System</p>
+        </footer>
+    </div>
+</body>
+</html> 
