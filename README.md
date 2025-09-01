@@ -1,4 +1,4 @@
-# 🚀 SmartStock - Inventory Management System
+# SmartStock - Inventory Management System
 
 &nbsp;
 
@@ -70,8 +70,6 @@
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 
-
-
 ## 📦 Installation
 
 ### Prerequisites
@@ -83,8 +81,8 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/smartstock.git
-   cd smartstock
+   git clone https://github.com/shubhamaher8/SmartStock.git
+   cd SmartStock
    ```
 
 2. **Install backend dependencies**
