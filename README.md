@@ -11,7 +11,15 @@
 
 ## 🖼️ Screenshot
 
-![SmartStock Dashboard](/frontend/assets/dashboard.png)
+<table>
+  <tr>
+    <td align="center">
+      <img src="frontend/assets/dashboard.png" alt="Dashboard Screenshot" width="420"/>
+      <br/>
+      <b>SmartStock Dashboard</b>
+    </td>
+  </tr>
+</table>
 
 ## ✨ Features
 
@@ -166,7 +174,7 @@ cd frontend
 We welcome contributions! Here's how you can help:
 
 1. 🍴 Fork the repository
-2. 🌿 Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. 💾 Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. 📤 Push to the branch (`git push origin feature/AmazingFeature`)
+2. 🌿 Create a feature branch (`git checkout -b Feature`)
+3. 💾 Commit your changes (`git commit -m 'Add some Feature'`)
+4. 📤 Push to the branch (`git push origin Feature`)
 5. 🔄 Open a Pull Request
